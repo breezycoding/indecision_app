@@ -1,0 +1,145 @@
+yarn
+	yarn init
+react and react dom
+	yarn add react@16.0.0 react-dom@16.0.0
+live server
+	yarn global add live-server or npm install -g live-server
+babel cli
+	yarn global add babel-cli@6.24.1 or npm install -g babel-cli@6.24.1
+babel react and babel env
+	yarn add babel-preset-react@6.24.1 babel-preset-env@1.5. or npm add babel-preset-react@6.24.1 babel-preset-env@1.5.2 
+webpack
+	yarn add webpack
+babel core and babel loader
+	yarn add babel-core@6.25.0 babel-loader@7.1.1
+webpack dev server
+	yarn add webpack-dev-server@2.5.1
+babel transform properties
+	yarn add babel-plugin-transform-class-properties@6.24.1
+babel spread operator
+	yarn add babel-plugin-transform-object-rest-spread
+webpack cli
+	yarn add webpack-cli
+css loader
+	yarn add css-loader
+style loader
+	yarn add style-loader
+compile scss file
+	yarn add sass-loader
+compiler for sass itself
+	yarn add node-sass
+for style reset/normalize
+	yarn add normalize.css
+react router(for dom router handling)
+	yarn add react-router-dom
+modal(optional)
+	yarn add react-modal@2.2.2
+redux(optional for practice in playground)
+	yarn add redux
+id generator(optional)
+	yarn add uuid
+react-redux
+	yarn add react-redux
+moment.js
+	yarn add moment
+	-to import
+		import moment from "moment";
+airbnb react dates
+	yarn add react-dates
+	-requires another peer dependency
+				yarn add react-addons-shallow-compare
+	-to import
+		import { SingleDatePicker } from "react-dates";
+		import 'react-dates/initialize';
+		import "react-dates/lib/css/_datepicker.css";
+jest for testing environment
+	yarn add --dev jest
+	-to run
+		yarn test -- --watchAll
+jest for babel
+	yarn add --dev babel-jest
+for testing react components(optional for simple utility rendering since theres a better library of testing that is enzyme by airbnb)
+	yarn add react-test-renderer
+	-to import
+		import ReactShallowRenderer from "react-test-renderer/shallow";
+enzyme
+	yarn add enzyme@3.0.0 enzyme-adapter-react-16@1.0.0 raf@3.3.2
+	-to fix error on __snapshots__ we install another library
+		yarn add enzyme-to-json
+	
+	
+	
+package.json
+{
+	"name": "boilerplate_v1",
+	"version": "1",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"serve": "live-server public/",
+		"build": "webpack",
+		"dev-server": "webpack-dev-server --mode development --open",
+		"test": "jest"
+	},
+	"dependencies": {
+		"babel-core": "^6.26.3",
+		"babel-loader": "^7.1.4",
+		"babel-plugin-transform-class-properties": "^6.24.1",
+		"babel-preset-env": "^1.6.1",
+		"babel-preset-react": "^6.24.1",
+		"css-loader": "^0.28.11",
+		"node-sass": "^4.9.0",
+		"normalize.css": "^8.0.0",
+		"react": "^16.3.2",
+		"react-dom": "^16.3.2",
+		"react-router-dom": "^4.2.2",
+		"sass-loader": "^7.0.1",
+		"style-loader": "^0.21.0",
+		"webpack": "^4.7.0",
+		"webpack-cli": "^2.1.3",
+		"webpack-dev-server": "^3.1.4"
+	}
+}
+
+
+.babelrc
+{
+	"presets":[
+		"env", 
+		"react"
+	],
+	"plugins": [
+		"transform-class-properties",
+		"transform-object-rest-spread"
+	]
+}
+
+webpack.config.js
+const path = require("path");
+module.exports = {
+	entry:"./src/app.js",
+	output:{
+		path:path.join(__dirname, "public"),
+		filename:"bundle.js"
+	},
+	module:{
+		rules:[{
+			loader:"babel-loader",
+			test:/\.js$/,
+			exclude: /node_modules/
+		},{
+			test:/\.s?css$/,
+			use:[
+				"style-loader",
+				"css-loader",
+				"sass-loader"
+			]
+		}]
+	},
+	devtool:"cheap-module-eval-source-map",
+	devServer:{
+		contentBase:path.join(__dirname, "public"),
+		historyApiFallback:true
+	},
+	performance: {hints: false}
+};
